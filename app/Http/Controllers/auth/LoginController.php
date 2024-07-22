@@ -16,14 +16,11 @@ class LoginController extends Controller
 
     public function verifyLogin()
     {
-        //dd(request()->all());
         $email = request('email');
         $password = request('password');
         $user = AuthModel::loginVerify($email, $password);
         if ($user === false) {
-//            Session::flash('error', 'Username dan Password Tidak Sesuai!');
             return redirect(route('login.index'))->with('error', 'Email dan Password Tidak Sesuai!');
-
         }
 
         //kondisi ketika user tidak null

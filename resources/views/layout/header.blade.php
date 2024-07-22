@@ -8,7 +8,7 @@
 {{--Chart JS--}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<link rel="icon" href="{{URL::asset('assets/images/logo-ukrim2.png')}}"/>
+<link rel="icon" href="{{URL::asset('assets/images/icon-fiskom.png')}}"/>
 <link rel="stylesheet" href="{{URL::asset('assets_main/vendor/owl-carousel/css/owl.carousel.min.css')}}">
 <link rel="stylesheet" href="{{URL::asset('assets_main/vendor/owl-carousel/css/owl.theme.default.min.css')}}">
 <link href="{{URL::asset('assets_main/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">

@@ -20,27 +20,33 @@ class AmiModel extends Model
 
     public function standars()
     {
-        return $this->belongsTo(StandarsModel::class);
+        return $this->belongsTo(StandarsModel::class, 'standar_id');
     }
 
     public function indikator()
     {
-        return $this->belongsTo(IndikatorsModel::class);
+        return $this->belongsTo(IndikatorsModel::class, 'indikator_id');
     }
 
     public function target_waktu()
     {
-        return $this->belongsTo(TargetWaktuModel::class);
+        return $this->belongsTo(TargetWaktuModel::class, 'target_waktu_id');
     }
 
-
-
-    public function getByStandarId($standarID)
+    public function updateCapainAmi($amiId, $capaian)
     {
         $query = DB::table('ami')
-            ->join('standars', 'id', '=', 'ami.standar_id')
-            ->where('ami.standar_id', '=', $standarID)
-            ->first();
+            ->where('id', '=', $amiId)
+            ->update($capaian);
+
+        return $query;
+    }
+
+    public function updateAmi($amiId, $updatedAMI)
+    {
+        $query = DB::table('ami')
+            ->where('id', '=', $amiId)
+            ->update($updatedAMI);
 
         return $query;
     }

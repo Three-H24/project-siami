@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DokumenPendukungModel;
-use App\Models\IndikatorsModel;
 use App\Models\StandarsModel;
 use App\Models\TargetWaktuModel;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +42,7 @@ class StandarController extends Controller
     public function createStandar()
     {
         request()->validate([
-            'nama_standar' => 'required'
+            'nama_standar' => 'required|unique:standars'
         ]);
 
         $dt = new \DateTime();
@@ -90,7 +88,7 @@ class StandarController extends Controller
         $standars = $this->standars::with(['indikator' => function ($query) use ($inputTahunTarget) {
             $query->with(['target_waktu' => function ($query) use ($inputTahunTarget) {
                 $query->where('tahun_target', $inputTahunTarget);
-            }, 'dokumen_pendukung_indikator' => function ($query) use ($inputTahunTarget) {
+            }, 'dokumen_pendukung' => function ($query) use ($inputTahunTarget) {
                 $query->whereHas('target_waktu', function ($q) use ($inputTahunTarget) {
                     $q->where('tahun_target', $inputTahunTarget);
                 });

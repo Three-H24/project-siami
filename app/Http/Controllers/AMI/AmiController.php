@@ -23,79 +23,110 @@ class AmiController extends Controller
         $targetWaktu = new TargetWaktuModel();
 
         $data = [
-            'title' => 'ami',
-            'amies' => $this->ami->with('dokumen_pendukung_ami', 'target_waktu', 'standars')->get(),
+            'title' => 'AMI',
+            'amies' => $this->ami->with('indikator', 'target_waktu', 'standars')->get(),
             'target_waktu' => $targetWaktu->groupByTanggalTarget(),
             'standars' => DB::table('standars')->get(),
         ];
 
-//        dd($data);
         return \view('App/ami/ami_index', $data);
     }
 
     public function amiFilter()
     {
-        $tahunTarget = request('tahun_target');
-        $standar = request('standar');
+        $tahunTarget = request()->input('tahun_target');
+        $standarID = request()->input('standar');
 
         $targetWaktu = new TargetWaktuModel();
-
-        $tanggalTarget = $targetWaktu->getByTanggalTarget($tahunTarget);
-
-        $query = $this->ami::query();
-
-        if ($tahunTarget) {
-            $targetWaktuID = $tanggalTarget->id;
-            $query->where('target_waktu_id', '=', $targetWaktuID);
-        }
-
-        if ($standar) {
-            $query->where('standar_id', '=', $standar);
-        }
-
-        $amies = $query->with(['dokumen_pendukung_ami', 'target_waktu', 'standar', 'capaian'])->get();
-
-        return \view('App/ami/ami_index', compact($amies));
-    }
-    public function amiAddForm(): View
-    {
-        $targetWaktu = new TargetWaktuModel();
-        $data = [
-            'title' => 'Formulir tambah ami',
-            'standars' => DB::table('standars')->get(),
-            'target_waktu' => $targetWaktu->groupByTanggalTarget(),
-
-//            $targetWaktu::select('tanggal_target')->distinct()->orderBy('tanggal_target', 'ASC')->get()
-        ];
-
-        return \view('App/ami/ami_add_form', $data);
-    }
-
-    public function createAmi()
-    {
-        request()->validate([
+        $validated = request()->validate([
+            'tahun_target' => 'required',
             'standar' => 'required',
-            'target_waktu' => 'required'
-        ], [
-            'standar.required' => 'Standar wajib dipilih!',
-
-            'target_waktu.required' => 'Target waktu wajib dipilih'
         ]);
 
-        $targetWaktu = new TargetWaktuModel();
-        $tanggalTarget = $targetWaktu->getByTanggalTarget(request('target_waktu'));
+        $amies = $this->ami::with(['indikator', 'target_waktu', 'standars'])
+            ->whereHas('target_waktu', function ($query) use ($validated) {
+                $query->where('tahun_target', $validated['tahun_target']);
+            })->whereHas('standars', function ($query) use ($validated) {
+                $query->where('standar_id', $validated['standar']);
+            })->get();
 
-        $targetWaktuID = $tanggalTarget->id;
+        $data = [
+            'title' => 'AMI',
+            'amies' => $amies,
+            'target_waktu' => $targetWaktu->groupByTanggalTarget(),
+            'standars' => DB::table('standars')->get(),
+            'tahunTarget' => $tahunTarget,
+            'standarId' => $standarID,
+        ];
+
+        return \view('App/ami/ami_index', $data);
+    }
+
+    public function prosesAuditAmi($standarId, $indikatorId)
+    {
+        $standar_id = $standarId;
+        $indikator_id = $indikatorId;
+        $target_waktu_id = request('target_id');
+        $userAudit = session('namaUserLogin');
+
+        $targetWaktuId = \request('target_id');
+
+        if ($targetWaktuId === null) {
+            return redirect()->back()->with('message-fail', 'Gagal memproses hasil audit, tahun target belum ada!');
+        }
+
+        $amiExists = $this->ami::with(['standars', 'indikator', 'target_waktu'])
+            ->whereHas('standars', function ($query) use ($standar_id) {
+                $query->where('standar_id', $standar_id);
+            })->whereHas('indikator', function ($query) use ($indikator_id) {
+                $query->where('indikator_id', $indikator_id);
+            })->whereHas('target_waktu', function ($query) use ($target_waktu_id) {
+                $query->where('target_waktu_id', $target_waktu_id);
+            })->first();
+
+        if ($amiExists !== null) {
+            return redirect()->back()->with('message-fail-audit', 'Gagal memproses audit, capaian/hasil audit sudah diinput oleh ' . $amiExists->user_audit);
+        }
 
         $dt = new \DateTime();
         $createdAT = $dt->format('Y-m-d H:i:s');
 
-        $this->ami->standar_id = request('standar');
-        $this->ami->target_waktu_id = $targetWaktuID;
-        $this->ami->created_at = $createdAT;
+        $tanggal_audit = $createdAT;
 
+        $this->ami->capaian = request('capaian');
+        $this->ami->keterangan_capaian = request('keterangan_capaian');
+        $this->ami->tanggal_audit = $tanggal_audit;
+        $this->ami->user_audit = $userAudit;
+        $this->ami->standar_id = $standar_id;
+        $this->ami->indikator_id = $indikator_id;
+        $this->ami->target_waktu_id = $target_waktu_id;
+        $this->ami->created_at = $createdAT;
         $this->ami->save();
 
-        return redirect(route('ami.add.form'))->with('message', 'Berhasil menambahkan ami!');
+        return redirect()->back()->with('message-audit', 'Berhasil memproses hasil audit!');
+    }
+
+    public function prosesEditCapaianAuditAmi($amiId)
+    {
+        $capaian = [
+            'capaian' => request('capaian'),
+            'keterangan_capaian' => request('keterangan_capaian')
+        ];
+
+        $this->ami->updateCapainAmi($amiId, $capaian);
+
+        return redirect()->back()->with('message-edit-capaian-audit', 'Berhasil mengubah keterangan capaian audit!');
+    }
+
+    public function editAMI($amiId)
+    {
+        $updatedAMI = [
+            'faktor_pendukung' => request('faktor_pendukung'),
+            'faktor_penghambat' => request('faktor_penghambat')
+        ];
+
+        $this->ami->updateAmi($amiId, $updatedAMI);
+
+        return redirect(route('ami.index'))->with('message-edit-ami', 'Berhasil mengubah AMI!');
     }
 }

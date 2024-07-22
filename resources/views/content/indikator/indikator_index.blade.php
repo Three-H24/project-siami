@@ -10,7 +10,7 @@
                             <select class="form-control ml-1" name="standar_id">
                                 <option value="">-- Pilih Standar --</option>
                                 @foreach($allStandar as $standar)
-                                    <option value="{{$standar->id}}">{{$standar->nama_standar}}</option>
+                                    <option value="{{$standar->id}}" {{isset($standarId) && $standarId == $standar->id ? 'selected' : ''}}>{{$standar->nama_standar}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,25 +57,28 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach($indikator->dokumen_pendukung_indikator as $doc)
-                                        <a href="{{URL::asset($doc->dokumen_pendukung)}}" target="_blank" style="color: #0a88f7">{{$doc->nama_dokumen}}</a>
+                                    @foreach($indikator->dokumen_pendukung as $doc)
+                                        <a href="{{URL::asset($doc->dokumen_pendukung)}}" target="_blank"
+                                           style="color: #0a88f7">{{$doc->nama_dokumen}}</a>
                                         <br>
                                     @endforeach
                                 </td>
                                 <td>
                                     <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                       data-backdrop="static" data-keyboard="false"
                                        data-target="#editIndikator{{$indikator->id}}"><i
-                                            class="fa-regular fa-edit"></i>
+                                                class="fa-regular fa-edit"></i>
                                     </a>
 
                                     <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                       data-backdrop="static" data-keyboard="false"
                                        data-target="#tambahTarget{{$indikator->id}}"><i
-                                            class="mdi mdi-calendar-plus"
-                                            data-backdrop="static" data-keyboard="false"></i></a>
+                                                class="mdi mdi-calendar-plus"></i></a>
 
                                     <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                       data-backdrop="static" data-keyboard="false"
                                        data-target="#editTahunTarget{{$indikator->id}}"><i
-                                            class="mdi mdi-calendar-edit"></i>
+                                                class="mdi mdi-calendar-edit"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -122,25 +125,6 @@
                                                value="{{$indikator_row->satuan}}" required>
                                     </div>
                                 </div>
-
-                                {{--                            <div class="form-group row">--}}
-                                {{--                                <label style="color: #222f3e" class="col-lg-2 col-form-label" for="val-username">Dokumen--}}
-                                {{--                                    Pendukung--}}
-                                {{--                                    <span class="text-danger">*</span>--}}
-                                {{--                                </label>--}}
-                                {{--                                <div class="col">--}}
-                                {{--                                    <div class="input-group mb-3">--}}
-                                {{--                                        <div class="input-group-prepend">--}}
-                                {{--                                            <span class="input-group-text">Upload</span>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="custom-file">--}}
-                                {{--                                            <input type="file" class="custom-file-input" name="dokumen_pendukung[]"--}}
-                                {{--                                                   multiple>--}}
-                                {{--                                            <label class="custom-file-label">Choose file</label>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
-                                {{--                            </div>--}}
                             </div>
 
                             <div class="modal-footer">
@@ -234,10 +218,10 @@
                                     </label>
                                     <div class="col">
                                         <select class="form-control" name="target_waktu" required>
-                                            <option selected>Pilih Tahun Target</option>
+                                            <option value="">Pilih Tahun Target</option>
                                             @foreach($indikator_row->target_waktu as $targetWaktu)
                                                 <option
-                                                    value="{{$targetWaktu->id}}">{{$targetWaktu->tahun_target}}
+                                                        value="{{$targetWaktu->id}}">{{$targetWaktu->tahun_target}}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -293,7 +277,7 @@
         toastr.success("{{session('message')}}", "Success")
         @endif
 
-            @if(session('message-target'))
+                @if(session('message-target'))
 
             toastr.options = {
             positionClass: "toast-top-right",
@@ -316,7 +300,33 @@
         toastr.success("{{session('message-target')}}", "Success")
         @endif
 
-            @if(session('message-fail-add-target'))
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+
+                    toastr.options = {
+                    positionClass: "toast-top-right",
+                    timeOut: 5e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                    }
+
+                    toastr.error("{{$error}}", "Failed")
+                @endforeach
+            @endif
+
+                @if(session('message-fail-add-target'))
 
             toastr.options = {
             positionClass: "toast-top-right",
@@ -339,7 +349,7 @@
         toastr.error("{{session('message-fail-add-target')}}", "Failed")
         @endif
 
-            @if(session('message-edit-tahun'))
+                @if(session('message-edit-tahun'))
 
             toastr.options = {
             positionClass: "toast-top-right",
@@ -361,7 +371,5 @@
         }
         toastr.success("{{session('message-edit-tahun')}}", "Success")
         @endif
-
-
     </script>
 @endsection()

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <!-- endinject -->
     {{--    <link rel="stylesheet" href="{{URL::asset('assets_main/vendor/toastr/css/toastr.min.css')}}">--}}
-    <link rel="shortcut icon" href="{{URL::asset('assets/images/logo-ukrim2.png')}}"/>
+    <link rel="shortcut icon" href="{{URL::asset('assets/images/icon-fiskom.png')}}"/>
 {{--    <link href="{{URL::asset('assets_main/css/style.css')}}" rel="stylesheet">--}}
 
 </head>
@@ -30,7 +30,7 @@
                 <div class="col-lg-6 d-flex align-items-center justify-content-center">
                     <div class="auth-form-transparent text-left p-3">
                         <div class="brand-logo">
-                            <img src="{{URL::asset('assets/images/logo-ukrim.png')}}" alt="logo">
+                            <img src="{{URL::asset('assets/images/logo-fiskom.png')}}" alt="logo">
                         </div>
                         <h4>Selamat datang!</h4>
                         <h6 class="font-weight-light">di Sistem Audit Mutu Internal</h6>

@@ -27,8 +27,8 @@
     ***********************************-->
     <div class="nav-header">
         <a href="{{route('dashboard.index')}}" class="brand-logo">
-            <img class="logo-abbr" src="{{URL::asset('assets/images/logo-ukrim2.png')}}" alt="">
-            <h4 class="brand-title" style="color: white">SIAMI</h4>
+            <img class="logo-abbr" src="{{URL::asset('assets/images/icon-home.png')}}" alt="">
+            <h4 class="brand-title mt-2" style="color: white">SIAMI</h4>
         </a>
 
         <div class="nav-control">
@@ -49,7 +49,7 @@
             <nav class="navbar navbar-expand">
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left" style="margin-top: 1em">
-                        <h3>SISTEM INFORMASI AUDIT MUTU INTERNAL</h3>
+                        <h4>SISTEM INFORMASI AUDIT MUTU INTERNAL</h4>
                     </div>
 
                     <ul class="navbar-nav header-right">
@@ -59,11 +59,13 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="#" class="dropdown-item" data-toggle="modal"
+                                   data-backdrop="static" data-keyboard="false"
                                    data-target="#profileUser">
                                     <i class="icon-user"></i>
                                     <span class="ml-2">Profile </span>
                                 </a>
                                 <a href="#" class="dropdown-item" data-toggle="modal"
+                                   data-backdrop="static" data-keyboard="false"
                                    data-target="#ubahPassword">
                                     <i class="icon-pencil"></i>
                                     <span class="ml-2">Ubah Password </span>
@@ -147,7 +149,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <p class="font-weight-bold" style="color: #0b3564">No. Telp:</p>
-                                    <h6 class="text-muted mt-0">{{session('telpUserLogin')}}</h6>
+                                    <h6 class="text-muted mt-0">+62{{session('telpUserLogin')}}</h6>
                                 </div>
                             </div>
 

@@ -1,21 +1,14 @@
 <div class="quixnav-scroll">
     <ul class="metismenu" id="menu">
         <li class="nav-label first">Main Menu</li>
-        <li><a href="{{route('dashboard.index')}}"><i class="icon icon-home"></i><span class="nav-text">Dashboard</span></a>
-        </li>
+        <li><a href="{{route('dashboard.index')}}"><i class="icon icon-home"></i><span class="nav-text">Dashboard</span></a></li>
+        <li><a href="{{route('dashboard.ami.index')}}"><i class="icon icon-home"></i><span class="nav-text">Dashboard AMI</span></a></li>
 
         {{-- ami MENU --}}
         <li class="nav-label">AMI Menu</li>
-        <li><a class="has-arrow" href="javascript:void('')" aria-expanded="false"><i class="fa-solid fa-award"></i>
-                <span
-                    class="nav-text">AMI</span></a>
-            <ul aria-expanded="false">
-                <li><a href="{{route('ami.index')}}">AMI</a></li>
-
-                @if(session('roleUserLogin') === 'admin')
-                    <li><a href="{{route('ami.add.form')}}">Tambah AMI</a></li>
-                @endif
-            </ul>
+        <li><a href="{{route('ami.index')}}">
+                <i class="fa-solid fa-award"></i><span>AMI</span>
+            </a>
         </li>
 
         <li class="nav-label">Standar Menu</li>

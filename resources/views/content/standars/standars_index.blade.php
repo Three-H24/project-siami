@@ -22,15 +22,19 @@
                                 <td>{{$i++}}</td>
                                 <td>{{$standar->nama_standar}}</td>
                                 <td>
-                                    <a class="btn btn-info mb-1" href="#" data-toggle="modal"
-                                       data-target="#editStandar{{$standar->id}}"><i
-                                            class="fa fa-edit"></i></a>
+                                    @if(session('roleUserLogin') === 'admin')
+                                        <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                           data-backdrop="static" data-keyboard="false"
+                                           data-target="#editStandar{{$standar->id}}"><i
+                                                class="fa fa-edit"></i></a>
+                                    @endif
 
                                     <a class="btn btn-info mb-1" data-toggle="modal"
                                        data-target="#pilihTahunTarget{{$standar->id}}"
                                        href="#"><i class="fa fa-eye"></i></a>
 
                                     <a class="btn btn-info mb-1" data-toggle="modal"
+                                       data-backdrop="static" data-keyboard="false"
                                        data-target="#exportPdf{{$standar->id}}"
                                        href="#"><i class="fa fa-file-pdf-o"></i></a>
                                 </td>
@@ -220,6 +224,29 @@
             tapToDismiss: !1
         }
         toastr.error("{{session('message-fail-get-indktr')}}", "Failed")
+        @endif
+
+        @if(session('message-fail-export'))
+
+            toastr.options = {
+            positionClass: "toast-top-right",
+            timeOut: 5e3,
+            closeButton: !0,
+            debug: !1,
+            newestOnTop: !0,
+            progressBar: !0,
+            preventDuplicates: !0,
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut",
+            tapToDismiss: !1
+        }
+        toastr.error("{{session('message-fail-export')}}", "Failed")
         @endif
     </script>
 

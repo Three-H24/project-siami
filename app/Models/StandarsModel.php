@@ -17,6 +17,11 @@ class StandarsModel extends Model
         return $this->hasMany(IndikatorsModel::class, 'standar_id');
     }
 
+    public function ami()
+    {
+        return $this->hasMany(AmiModel::class, 'standar_id');
+    }
+
     public function getById($id)
     {
         $query = DB::table('standars')

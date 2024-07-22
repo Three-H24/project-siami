@@ -53,10 +53,8 @@ class UserController extends Controller
         $dt = new \DateTime();
         $createdAT = $dt->format('Y-m-d H:i:s');
 
-//        $users = new UserModel();
-
         $this->users->nama = $request->post('nama');
-        $this->users->email =$request->post('email');
+        $this->users->email = $request->post('email');
         $this->users->password = Hash::make($request->post('password'));
         $this->users->foto = $path;
         $this->users->jabatan = $request->post('jabatan');
@@ -83,30 +81,46 @@ class UserController extends Controller
         return redirect(route('user.index'))->with('message-reset', 'Password berhasil di atur ulang');
     }
 
-    public function changeUser($id)
+    public function updateUser($id)
     {
-        $imageName = time() . '_' . \request()->file('foto')->getClientOriginalName();
+        if (\request()->file('foto') !== null) {
+            $imageName = time() . '_' . \request()->file('foto')->getClientOriginalName();
 
-        $path = \request()->file('foto')->move('foto', $imageName);
+            $path = \request()->file('foto')->move('foto', $imageName);
 
-        $dt = new \DateTime();
-        $updatedAt = $dt->format('Y-m-d H:i:s');
+            $dt = new \DateTime();
+            $updatedAt = $dt->format('Y-m-d H:i:s');
 
-        $updateUser = [
-            'nama' => \request('nama'),
-            'email' => \request('email'),
-            'foto' => $path,
-            'jabatan' => \request('jabatan'),
-            'telp' => \request('telp'),
-            'role' => \request('role'),
-            'updated_at' => $updatedAt,
-        ];
+            $updateUser = [
+                'nama' => \request('nama'),
+                'email' => \request('email'),
+                'foto' => $path,
+                'jabatan' => \request('jabatan'),
+                'telp' => \request('telp'),
+                'role' => \request('role'),
+                'updated_at' => $updatedAt,
+            ];
 
-//        $user = DB::table('users')->where('id', '=', $id)->first();
+            DB::table('users')
+                ->where('id', '=', $id)
+                ->update($updateUser);
+        } else {
+            $dt = new \DateTime();
+            $updatedAt = $dt->format('Y-m-d H:i:s');
 
-        DB::table('users')
-            ->where('id', '=', $id)
-            ->update($updateUser);
+            $updateUser = [
+                'nama' => \request('nama'),
+                'email' => \request('email'),
+                'jabatan' => \request('jabatan'),
+                'telp' => \request('telp'),
+                'role' => \request('role'),
+                'updated_at' => $updatedAt,
+            ];
+
+            DB::table('users')
+                ->where('id', '=', $id)
+                ->update($updateUser);
+        }
 
         return redirect(route('user.index'))->with('message-change', 'Data user berhasil di ubah!');
     }

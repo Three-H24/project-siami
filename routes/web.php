@@ -19,12 +19,14 @@ Route::post('/loginVerify', 'App\Http\Controllers\auth\LoginController@verifyLog
 
 Route::group(['prefix' => 'siami', 'middleware' => ['ami', 'web']], function() {
     Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard.index');
+    Route::get('/dashboard/ami', 'App\Http\Controllers\DashboardController@amiDashboardindex')->name('dashboard.ami.index');
+    Route::get('/dashboard/ami/filter', 'App\Http\Controllers\DashboardController@amiDashboardFilter')->name('ami.dashboard.filter');
 
     // User routers
     Route::get('/users', 'App\Http\Controllers\UserController@index')->name('user.index');
     Route::get('users/add/form', 'App\Http\Controllers\UserController@addUserIndex')->name('user.add.index');
     Route::post('users/add', 'App\Http\Controllers\UserController@createUser')->name('user.create');
-    Route::post('users/change/{id}', 'App\Http\Controllers\UserController@changeUser')->name('user.change');
+    Route::post('users/update/{id}', 'App\Http\Controllers\UserController@updateUser')->name('user.update');
     Route::post('users/ubah/password', 'App\Http\Controllers\UserController@ubahPassword')->name('user.ubah.password');
     Route::post('users/reset/password/{id}', 'App\Http\Controllers\UserController@resetPasswordUser')->name('user.reset.password');
 
@@ -47,12 +49,12 @@ Route::group(['prefix' => 'siami', 'middleware' => ['ami', 'web']], function() {
     Route::post('/indikators/add-target/{id}', 'App\Http\Controllers\IndikatorController@addTargetIndikator')->name('indikator.add.target');
     Route::post('/indikators/add/dokumen-pendukung/{id}', 'App\Http\Controllers\IndikatorController@addDokumenPendukung')->name('indikator.add.doc.pendukung');
 
-
     // ami Routers
     Route::get('/ami-tables', 'App\Http\Controllers\AMI\AmiController@index')->name('ami.index');
-    Route::get('/ami-filter', 'App\Http\Controllers\AMI\AmiController@amiFilter')->name('ami.filter');
-    Route::get('/ami/add/form', 'App\Http\Controllers\AMI\AmiController@amiAddForm')->name('ami.add.form');
-    Route::post('/ami/add', 'App\Http\Controllers\AMI\AmiController@createAmi')->name('ami.add');
+    Route::get('/ami/filter', 'App\Http\Controllers\AMI\AmiController@amiFilter')->name('ami.filter');
+    Route::post('/ami/proses/audit/{standarId}/{indikatorId}', 'App\Http\Controllers\AMI\AmiController@prosesAuditAmi')->name('ami.proses.audit');
+    Route::post('/ami/proses/edit/ket-capaian/audit/{amiId}', 'App\Http\Controllers\AMI\AmiController@prosesEditCapaianAuditAmi')->name('ami.edit.audit');
+    Route::post('/ami/proses/edit/AMI/{amiId}', 'App\Http\Controllers\AMI\AmiController@editAMI')->name('ami.edit');
 
 });
 

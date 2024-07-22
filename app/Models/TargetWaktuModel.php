@@ -23,18 +23,14 @@ class TargetWaktuModel extends Model
         return $this->belongsTo(IndikatorsModel::class);
     }
 
-    public function dokumen_pendukung_indikator()
+    public function dokumen_pendukung()
     {
         return $this->hasMany(DokumenPendukungModel::class, 'target_waktu_id');
     }
 
-    public function getById($id)
+    public function ami()
     {
-        $query = DB::table('target_waktu')
-            ->where('id', '=', $id)
-            ->first();
-
-        return $query;
+        return $this->hasMany(AmiModel::class, 'target_waktu_id');
     }
 
     public function getTanggalTargetByIndikatorId($indikatorID)
@@ -48,17 +44,6 @@ class TargetWaktuModel extends Model
     {
         $query = DB::table('target_waktu')
             ->select('tahun_target')
-            ->join('indikator', 'indikator.id', '=', 'target_waktu.indikator_id')
-            ->where('target_waktu.indikator_id', '=', $indikatorID)
-            ->where('target_waktu.tahun_target', '=', $inputTarget)
-            ->first();
-
-        return $query;
-    }
-
-    public function getByIndikatorId($indikatorID, $inputTarget)
-    {
-        $query = DB::table('target_waktu')
             ->join('indikator', 'indikator.id', '=', 'target_waktu.indikator_id')
             ->where('target_waktu.indikator_id', '=', $indikatorID)
             ->where('target_waktu.tahun_target', '=', $inputTarget)
@@ -81,15 +66,6 @@ class TargetWaktuModel extends Model
         $query = DB::table('target_waktu')
             ->groupBy('tahun_target')
             ->get();
-
-        return $query;
-    }
-
-    public function getByTanggalTarget($tanggalTarget)
-    {
-        $query = DB::table('target_waktu')
-            ->where('tahun_target', '=', $tanggalTarget )
-            ->first();
 
         return $query;
     }

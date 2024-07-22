@@ -24,26 +24,27 @@ class IndikatorController extends Controller
         $standarId = \request()->input('standar_id');
 
         $indikators = $this->indikator::query();
+        $targetWaktu = new TargetWaktuModel();
 
         if ($standarId === null) {
-            $targetWaktu = new TargetWaktuModel();
             $data = [
                 'title' => 'Indikator',
-                'indikators' => $this->indikator->with(['standar', 'dokumen_pendukung_indikator', 'target_waktu'])->get(),
+                'indikators' => $this->indikator->with(['standar', 'dokumen_pendukung', 'target_waktu'])->get(),
                 'target_waktu' => $targetWaktu->groupByTanggalTarget(),
                 'allStandar' => StandarsModel::all(),
             ];
         } else {
+
             if ($standarId !== 0) {
                 $indikators->where('standar_id', $standarId);
             }
 
-            $targetWaktu = new TargetWaktuModel();
             $data = [
                 'title' => 'Indikator',
-                'indikators' => $indikators->with(['standar', 'dokumen_pendukung_indikator', 'target_waktu'])->get(),
+                'indikators' => $indikators->with(['standar', 'dokumen_pendukung', 'target_waktu'])->get(),
                 'target_waktu' => $targetWaktu->groupByTanggalTarget(),
                 'allStandar' => StandarsModel::all(),
+                'standarId' => $standarId,
             ];
         }
 
@@ -109,6 +110,12 @@ class IndikatorController extends Controller
     {
         $indikator = $this->indikator->getById($id);
 
+        \request()->validate([
+            'tanggal_target' => 'required|digits:4'
+        ], [
+            'tanggal_target.digits' => 'Tahun target minimal 4 angka dan maksimal 4 angka!'
+        ]);
+
         $dt = new \DateTime();
         $createdAT = $dt->format('Y-m-d H:i:s');
         $updatedAT = $createdAT;
@@ -137,7 +144,7 @@ class IndikatorController extends Controller
             // Jika tanggal yang di input sudah terkait dengan Indikator ID
             if ($tanggalTargetExist !== null) {
 
-                return redirect(route('indikator.index'))->with('message-fail-add-target', 'Target/waktu yang diinput sudah ada!');
+                return redirect(route('indikator.index'))->with('message-fail-add-target', 'Tahun target yang diinput sudah ada!');
 
             } else {
 
@@ -158,8 +165,7 @@ class IndikatorController extends Controller
     {
         //Simpan indikator ID ke $indikatorID
         $indikator = $this->indikator->getById($indikatorId);
-//        dd($indikator);
-
+        
         $indikatorID = $indikator->id;
         $targetWaktuId = \request('target_id');
 
@@ -173,7 +179,7 @@ class IndikatorController extends Controller
 
         if (\request()->hasFile('dokumen_pendukung')) {
             foreach (\request()->file('dokumen_pendukung') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
+                $fileName = date('d-m-y') . '_' . $file->getClientOriginalName();
                 $filePath = $file->move('dokumen_indikator', $fileName);
 
                 $dokumen = new DokumenPendukungModel();

@@ -23,10 +23,15 @@ class ExportPDFController extends Controller
         $startYear = \request('tahun_awal');
         $endYear = \request('tahun_akhir');
 
+        # Batalkan export jika tahun akhir lebih kecil dari tahun awal
+        if ($endYear < $startYear) {
+            return redirect(route('standar.index'))->with('message-fail-export', 'Tahun akhir tidak boleh lebih kecil dari tahun awal!');
+        }
+
         $standars = $this->standars::with(['indikator' => function ($query) use ($startYear, $endYear) {
             $query->with(['target_waktu' => function ($query) use ($startYear, $endYear) {
                 $query->whereBetween('tahun_target', [$startYear, $endYear]);
-            }, 'dokumen_pendukung_indikator' => function ($query) use ($startYear, $endYear) {
+            }, 'dokumen_pendukung' => function ($query) use ($startYear, $endYear) {
                 $query->whereHas('target_waktu', function ($q) use ($startYear, $endYear) {
                     $q->whereBetween('tahun_target', [$startYear, $endYear]);
                 });

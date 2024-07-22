@@ -64,7 +64,7 @@
                 </td>
             @endfor
             <td>
-                @foreach ($indikator->dokumen_pendukung_indikator as $dokumen)
+                @foreach ($indikator->dokumen_pendukung as $dokumen)
                     {{$dokumen->nama_dokumen}}
                 @endforeach
 

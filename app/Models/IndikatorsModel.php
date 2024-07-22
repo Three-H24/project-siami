@@ -17,7 +17,7 @@ class IndikatorsModel extends Model
         return $this->belongsTo(StandarsModel::class);
     }
 
-    public function dokumen_pendukung_indikator()
+    public function dokumen_pendukung()
     {
         return $this->hasMany(DokumenPendukungModel::class, 'indikator_id');
     }
