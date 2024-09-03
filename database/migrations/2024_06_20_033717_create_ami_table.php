@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('keterangan_capaian')->nullable();
             $table->text('faktor_penghambat')->nullable();
             $table->text('faktor_pendukung')->nullable();
+            $table->text('keterangan_peningkatan')->nullable();
             $table->dateTime('tanggal_audit')->nullable();
             $table->string('user_audit')->nullable();
 

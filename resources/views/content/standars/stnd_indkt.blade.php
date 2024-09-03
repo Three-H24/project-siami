@@ -16,7 +16,7 @@
                             <th>Tahun Target</th>
                             <th>Target</th>
                             <th>Dokumen Pendukung</th>
-                            @if(session('roleUserLogin') === 'admin' || 'auditor')
+                            @if(session('roleUserLogin') === 'admin' || session('roleUserLogin') === 'auditor')
                                 <th>Action</th>
                             @endif
                         </tr>
@@ -53,24 +53,24 @@
                                         @endforeach
                                     </ul>
                                 </td>
-                                @if(session('roleUserLogin') === 'admin' || 'auditor')
+                                @if(session('roleUserLogin') === 'admin' || session('roleUserLogin') === 'auditor')
                                     <td>
                                         @if(session('roleUserLogin') === 'admin')
-                                            <a href="#" class="btn btn-secondary mb-1" data-toggle="modal"
+                                            <a href="#" class="btn btn-secondary mb-1" title="Tambah dokumen pendukung" data-toggle="modal"
                                                data-backdrop="static" data-keyboard="false"
                                                data-target="#tambahDokumen{{$indikator->id}}">
                                                 <i class="fa-solid fa-file-medical"></i></a>
                                         @endif
 
-                                        @if(session('roleUserLogin') === 'admin' || 'auditor')
-                                            <a href="#" class="btn btn-secondary mb-1" data-backdrop="static"
+                                        @if(session('roleUserLogin') === 'auditor')
+                                            <a href="#" class="btn btn-success mb-1" title="Proses audit" data-backdrop="static"
                                                data-keyboard="false"
                                                data-toggle="modal" data-target="#prosesAudit{{$indikator->id}}">
                                                 <i class="mdi mdi-file-check"></i></a>
                                             @foreach($indikator->target_waktu as $targetWaktu)
                                                 @foreach($targetWaktu->ami as $ami)
-                                                    <a href="#" class="btn btn-secondary mb-1"
-                                                       data-backdrop="static"
+                                                    <a href="#" class="btn btn-warning mb-1"
+                                                       data-backdrop="static" title="Edit capaian"
                                                        data-keyboard="false"
                                                        data-toggle="modal" data-target="#editCapaian{{$ami->id}}">
                                                         <i class="fa-solid fa-file-pen"></i></a>
@@ -165,8 +165,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal <span class="btn-icon-right"><i class="fa fa-close"></i></span></button>
+                            <button type="submit" class="btn btn-success">Simpan <span class="btn-icon-right"><i class="fa fa-save"></i></span></button>
                         </div>
                     </form>
                 </div>
@@ -267,8 +267,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-success">Proses</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal <span class="btn-icon-right"><i class="fa fa-close"></i></span></button>
+                            <button type="submit" class="btn btn-success">Proses <span class="btn-icon-right"><i class="fa fa-save"></i></span></button>
                         </div>
                     </form>
                 </div>
@@ -390,8 +390,8 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-success">Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal <span class="btn-icon-right"><i class="fa fa-close"></i></span></button>
+                                    <button type="submit" class="btn btn-success">Simpan <span class="btn-icon-right"><i class="fa fa-save"></i></span></button>
                                 </div>
                             </form>
                         </div>

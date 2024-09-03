@@ -127,7 +127,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success">Tambah User</button>
+                    <button type="submit" class="btn btn-success">Tambah User <span class="btn-icon-right"><i class="fa fa-user-plus"></i></span></button>
                 </form>
             </div>
         </div>

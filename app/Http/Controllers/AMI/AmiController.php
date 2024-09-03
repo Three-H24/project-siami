@@ -129,4 +129,15 @@ class AmiController extends Controller
 
         return redirect(route('ami.index'))->with('message-edit-ami', 'Berhasil mengubah AMI!');
     }
+
+    public function tambahPeningkatanAMI($amiId)
+    {
+        $updatedAMI = [
+            'keterangan_peningkatan' => request('keterangan_peningkatan'),
+        ];
+
+        $this->ami->updateAmi($amiId, $updatedAMI);
+
+        return redirect(route('ami.index'))->with('message-peningkatan-ami', 'Berhasil menambahkan keterangan peningkatan AMI!');
+    }
 }

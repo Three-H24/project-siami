@@ -161,13 +161,13 @@
         toastr.error("{{session('Error-ubah-pass2')}}", "Gagal")
         @endif
 
-            @if(session('message-success'))
+            @if(session('message'))
 
             toastr.options = {
             positionClass: "toast-top-right",
             timeOut: 5e3,
             closeButton: !0,
-            debug: !1,
+            debug: !0,
             newestOnTop: !0,
             progressBar: !0,
             preventDuplicates: !0,
@@ -181,8 +181,8 @@
             hideMethod: "fadeOut",
             tapToDismiss: !1
         }
-        toastr.success("{{session('message-success')}}", "Success")
+        toastr.success("{{session('message')}}", "Success")
         @endif
 
     </script>
-@endsection
+@endsection()

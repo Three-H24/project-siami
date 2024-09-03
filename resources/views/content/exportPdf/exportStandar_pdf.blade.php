@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Export PDF | {{$title}}</title>
+    <title>Export Standar PDF | {{$title}}</title>
 
     <style>
         table {
@@ -56,8 +56,10 @@
             <td>{{ $indikator->satuan }}</td>
             @for ($year = $startYear; $year <= $endYear; $year++)
                 <td class="nowrap">
-                    @if ($indikator->target_waktu->contains('tahun_target', $year))
-                        ada
+                    @php($target = $indikator->target_waktu->firstWhere('tahun_target', $year))
+
+                    @if ($target)
+                        {{$target->keterangan_target}}
                     @else
                         -
                     @endif
@@ -67,7 +69,6 @@
                 @foreach ($indikator->dokumen_pendukung as $dokumen)
                     {{$dokumen->nama_dokumen}}
                 @endforeach
-
             </td>
         </tr>
     @endforeach

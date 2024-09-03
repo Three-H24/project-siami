@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success">Tambah Standar</button>
+                    <button type="submit" class="btn btn-success">Tambah Standar <span class="btn-icon-right"><i class="fa fa-plus-circle"></i></span></button>
                 </form>
             </div>
         </div>

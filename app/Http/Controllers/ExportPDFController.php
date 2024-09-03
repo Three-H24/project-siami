@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AmiModel;
 use App\Models\StandarsModel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class ExportPDFController extends Controller
 {
     protected $standars;
+
     public function __construct()
     {
         $this->standars = new StandarsModel();
     }
-    public function exportPDF($namaStandar, $standarID)
+
+    public function exportStandarPDF($namaStandar, $standarID)
     {
         $standar = $this->standars->getIndikatorByStandarId($standarID);
 
@@ -48,8 +52,44 @@ class ExportPDFController extends Controller
             'totalYear' => $totalYear,
         ];
 
-        $pdf = Pdf::loadView('content/exportPdf/export_pdf', $data)->setPaper('A4', 'landscape');
+        $pdf = Pdf::loadView('content/exportPdf/exportStandar_pdf', $data)->setPaper('A4', 'landscape');
 
         return $pdf->download(date('d-m-y') . '_' . $namaStandar . '.pdf');
+    }
+
+    public function exportAMIPdf(Request $request)
+    {
+        $request->validate([
+            'standars' => 'required',
+            'tahun_target' => 'required',
+            'kolom' => 'required|array',
+        ]);
+
+        $standarID = $request->input('standars');
+        $tahunTarget = $request->input('tahun_target');
+        $selectedColumns = $request->input('kolom');
+
+        // Ambil standar berdasarkan ID yang dipilih
+        $standar = StandarsModel::findOrFail($standarID);
+        $standarName = $standar->nama_standar;
+
+        $amies = AmiModel::with(['indikator.standar', 'target_waktu'])
+            ->whereHas('target_waktu', function ($query) use ($tahunTarget) {
+                $query->where('tahun_target', $tahunTarget);
+            })
+            ->whereHas('indikator.standar', function ($query) use ($standarID) {
+                $query->where('id', $standarID);
+            })->get();
+
+        $data = [
+            'title' => $standarName,
+            'selectedColumns' => $selectedColumns,
+            'tahunTarget' => $tahunTarget,
+            'amies' => $amies
+        ];
+
+        $pdf = Pdf::loadView('content/exportPdf/exportAMI_pdf', $data)->setPaper('A4', 'landscape');
+
+        return $pdf->download('Hasil AMI Tahun/Target Waktu_' . $tahunTarget . '_' . date('d-m-y') . '.pdf');
     }
 }

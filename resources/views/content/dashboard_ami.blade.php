@@ -65,9 +65,9 @@
                                 {
                                     label: 'AMI {{$tahunTarget}}',
                                     data: [{{ $dataChart['total_tercapai'] }}, {{ $dataChart['total_tidak_tercapai'] }}],
-                                    borderColor: ['#8854d0', '#c0392b'],
+                                    borderColor: ['#A3CB38', '#c0392b'],
                                     borderWidth: "1",
-                                    backgroundColor: ['#9980FA', '#e74c3c']
+                                    backgroundColor: ['#009432', '#e74c3c']
                                 }
                             ]
                         },

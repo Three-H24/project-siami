@@ -64,18 +64,18 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                    <a class="btn btn-info mb-1" title="Edit Indikator" href="#" data-toggle="modal"
                                        data-backdrop="static" data-keyboard="false"
                                        data-target="#editIndikator{{$indikator->id}}"><i
                                                 class="fa-regular fa-edit"></i>
                                     </a>
 
-                                    <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                    <a class="btn btn-secondary mb-1" title="Tambah Tahun/Target" href="#" data-toggle="modal"
                                        data-backdrop="static" data-keyboard="false"
                                        data-target="#tambahTarget{{$indikator->id}}"><i
                                                 class="mdi mdi-calendar-plus"></i></a>
 
-                                    <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                    <a class="btn btn-warning mb-1" title="Edit Tahun/Target" href="#" data-toggle="modal"
                                        data-backdrop="static" data-keyboard="false"
                                        data-target="#editTahunTarget{{$indikator->id}}"><i
                                                 class="mdi mdi-calendar-edit"></i>

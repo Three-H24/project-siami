@@ -41,12 +41,12 @@
                                          width="100">
                                 </td>
                                 <td>
-                                    <a class="btn btn-info mb-1" href="#" data-toggle="modal"
+                                    <a class="btn btn-info mb-1" title="Ubah data user" href="#" data-toggle="modal"
                                        data-backdrop="static" data-keyboard="false"
                                        data-target="#ubahUser{{$user->id}}"><i class="fa-regular fa-pen-to-square"></i>
                                     </a>
 
-                                    <a class="btn btn-warning mb-1" href="#" data-toggle="modal"
+                                    <a class="btn btn-warning mb-1" title="Reset password user" href="#" data-toggle="modal"
                                        data-backdrop="static" data-keyboard="false"
                                        data-target="#resetPasswordUser{{$user->id}}"><i class="fa fa-refresh"></i>
                                     </a>
@@ -97,7 +97,7 @@
 
                             <div class="form-group row">
                                 <label style="color: #222f3e" class="col-lg-2 col-form-label" for="val-username">Foto
-                                    User</label>                            
+                                    User</label>
                                 <div class="input-group mb-3 col">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Upload</span>

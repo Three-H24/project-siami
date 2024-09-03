@@ -38,7 +38,8 @@ Route::group(['prefix' => 'siami', 'middleware' => ['ami', 'web']], function() {
     Route::post('/standars/edit/{id}', '\App\Http\Controllers\StandarController@editStandar')->name('standar.edit');
 
     // Export PDF Routers
-    Route::get('/standars/export-pdf/{nama_standar}/{id}', 'App\Http\Controllers\ExportPDFController@exportPdf')->name('export.pdf.index');
+    Route::get('/standars/export-pdf/{nama_standar}/{id}', 'App\Http\Controllers\ExportPDFController@exportStandarPDF')->name('export.standar.pdf');
+    Route::get('/ami/export-pdf', 'App\Http\Controllers\ExportPDFController@exportAMIPdf')->name('export.ami.pdf');
 
     // Indikator Routers
     Route::get('/indikators', 'App\Http\Controllers\IndikatorController@index')->name('indikator.index');
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'siami', 'middleware' => ['ami', 'web']], function() {
     Route::post('/ami/proses/audit/{standarId}/{indikatorId}', 'App\Http\Controllers\AMI\AmiController@prosesAuditAmi')->name('ami.proses.audit');
     Route::post('/ami/proses/edit/ket-capaian/audit/{amiId}', 'App\Http\Controllers\AMI\AmiController@prosesEditCapaianAuditAmi')->name('ami.edit.audit');
     Route::post('/ami/proses/edit/AMI/{amiId}', 'App\Http\Controllers\AMI\AmiController@editAMI')->name('ami.edit');
+    Route::post('/ami/peningkatan/{amiId}', 'App\Http\Controllers\AMI\AmiController@tambahPeningkatanAMI')->name('ami.keterangan.peningkatan');
 
 });
 

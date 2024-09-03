@@ -1,9 +1,3 @@
-<!-- Toastr -->
-<script src="{{URL::asset('assets_main/vendor/toastr/js/toastr.min.js')}}"></script>
-
-<!-- All init script -->
-<script src="{{URL::asset('assets_main/js/plugins-init/toastr-init.js')}}"></script>
-
 <!-- Required vendors -->
 <script src="{{URL::asset('assets_main/vendor/global/global.min.js')}}"></script>
 <script src="{{URL::asset('assets_main/js/quixnav-init.js')}}"></script>
@@ -19,7 +13,6 @@
 <!-- Datatable -->
 <script src="{{URL::asset('assets_main/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets_main/js/plugins-init/datatables.init.js')}}"></script>
-
 
 
 <!-- Vectormap -->

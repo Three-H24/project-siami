@@ -123,70 +123,57 @@
             <p>Copyright © 2024 SI-AMI All rights reserved.</p>
         </div>
     </div>
+</div>
 
-    <!-- Modal Profile User -->
-    <div class="modal fade" id="profileUser">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Profile User</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-0">
-                        <div class="col-sm-3">
-                            <img src="{{URL::asset(session('fotoUserLogin'))}}" alt="image" width="180" height="280"
-                                 style="border: 3px solid #215576">
-                        </div>
-                        <div class="col-sm-8">
-                            <h4 class="text-center">{{session('namaUserLogin')}}</h4>
-                            <hr class="badge-info mt-0 w-50">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold" style="color: #0b3564">Email:</p>
-                                    <h6 class="text-muted mt-0">{{session('emailUserLogin')}}</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold" style="color: #0b3564">No. Telp:</p>
-                                    <h6 class="text-muted mt-0">+62{{session('telpUserLogin')}}</h6>
-                                </div>
+<!-- Modal Profile User -->
+<div class="modal fade" id="profileUser">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Profile User</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-0">
+                    <div class="col-sm-3">
+                        <img src="{{URL::asset(session('fotoUserLogin'))}}" alt="image" width="180" height="280"
+                             style="border: 3px solid #215576">
+                    </div>
+                    <div class="col-sm-8">
+                        <h4 class="text-center">{{session('namaUserLogin')}}</h4>
+                        <hr class="badge-info mt-0 w-50">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold" style="color: #0b3564">Email:</p>
+                                <h6 class="text-muted mt-0">{{session('emailUserLogin')}}</h6>
                             </div>
-
-                            <hr class="badge-info mt-0">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold" style="color: #0b3564">Jabatan:</p>
-                                    <h6 class="text-muted mt-0">{{session('jabatanUserLogin')}}</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold" style="color: #0b3564">Role:</p>
-                                    <h6 class="text-muted mt-0">{{session('roleUserLogin')}}</h6>
-                                </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold" style="color: #0b3564">No. Telp:</p>
+                                <h6 class="text-muted mt-0">+62{{session('telpUserLogin')}}</h6>
                             </div>
-                            <hr class="badge-info mt-0">
-                            <p class="font-weight-bold" style="color: #0b3564">Jam login:</p>
-                            <h6 class="text-muted mt-0">{{session('jamLogin')}}</h6>
-
                         </div>
+
+                        <hr class="badge-info mt-0">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold" style="color: #0b3564">Jabatan:</p>
+                                <h6 class="text-muted mt-0">{{session('jabatanUserLogin')}}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold" style="color: #0b3564">Role:</p>
+                                <h6 class="text-muted mt-0">{{session('roleUserLogin')}}</h6>
+                            </div>
+                        </div>
+                        <hr class="badge-info mt-0">
+                        <p class="font-weight-bold" style="color: #0b3564">Jam login:</p>
+                        <h6 class="text-muted mt-0">{{session('jamLogin')}}</h6>
+
                     </div>
                 </div>
-                {{--                    <div class="profile-news">--}}
-                {{--                        <div class="media pt-3 pb-3">--}}
-                {{--                            <img src="{{URL::asset(session('fotoUserLogin'))}}" alt="image" class="mr-3" width="150"--}}
-                {{--                                 style="border: 3px solid black">--}}
-                {{--                            <div class="media-body">--}}
-                {{--                                <h5 class="m-b-5">{{session('namaUserLogin')}}</h5>--}}
-                {{--                                <p style="color: #0b3564">Email: {{session('emailUserLogin')}}</p>--}}
-                {{--                                <p style="color: #0b3564">Jabatan: {{session('jabatanUserLogin')}}</p>--}}
-                {{--                                <p style="color: #0b3564">Role: {{session('roleUserLogin')}}</p>--}}
-                {{--                                <p style="color: #0b3564">Jam Login: {{session('jamLogin')}}</p>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -241,8 +228,6 @@
             </form>
         </div>
     </div>
-</div>
-
 </div>
 
 @include('layout.footer')
